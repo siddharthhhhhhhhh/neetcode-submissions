@@ -7,16 +7,22 @@
 
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        stack = [(p, q)]
-
-        while stack:
-            node1, node2 = stack.pop()
-
-            if not node1 and not node2:
+        stackp = [p]
+        stackq = [q]
+        while stackp:
+            a = stackp.pop()
+            b = stackq.pop()
+            if a is None and b is None:
                 continue
-            elif not node1 or not node2 or node1.val != node2.val:
+            if a is None or b is None:
                 return False
+            if a.val != b.val:
+                return False
+            stackp.append(a.left)
+            stackp.append(a.right)
+            stackq.append(b.left)
+            stackq.append(b.right)
             
-            stack.append([node1.left, node2.left])
-            stack.append([node1.right, node2.right])
+            
         return True
+        
