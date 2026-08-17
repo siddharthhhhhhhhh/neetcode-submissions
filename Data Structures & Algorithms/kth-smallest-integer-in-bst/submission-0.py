@@ -7,21 +7,19 @@
 
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        list1 = [root.val]
-        
-        def dfs(root):
-            if not root:
-                return None
-            left = dfs(root.left)
-            if left:
-                list1.append(root.left.val)
-            right = dfs(root.right)
-            if right:
-                list1.append(root.right.val)
-            return True
-        dfs(root)
-        list1.sort()
-        return list1[k-1]
-            
+        list1 = []
+        self.dfs(root, list1)
+        heapq.heapify(list1)
+        for i in range(k):
+            x = heapq.heappop(list1)
+        return x
+    def dfs(self, root, list1):
+        if root is None:
+            return
+        list1.append(root.val)
+        left = self.dfs(root.left, list1)
+        right = self.dfs(root.right, list1)
+        return
+
 
         
